@@ -1,0 +1,32 @@
+# --- Django Temel ---
+*.log
+*.pot
+*.pyc
+__pycache__/
+dbshell
+db.sqlite3
+db.sqlite3-journal
+
+# --- Sanal Ortam (Virtual Environment) ---
+venv/
+env/
+.env
+.venv/
+/bin/
+/lib/
+/include/
+
+# --- Medya Dosyaları (Kullanıcı Yüklemeleri) ---
+/media/
+/static_root/
+/staticfiles/
+
+# --- IDE ve Editör Ayarları ---
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# --- Çevresel Değişkenler (Güvenlik İçin) ---
+.env
