@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import JsonResponse
-from .models import Profile, Skill, Project, ContactMessage
+from .models import Profile, Skill, Project, ContactMessage, Experience, Education
 
 def home(request):
 
@@ -22,13 +22,32 @@ def home(request):
         return JsonResponse({'success': True, 'message': 'Mesajınız başarıyla gönderildi!'})
 
     profile = Profile.objects.first()
-    skills = Skill.objects.filter(is_active=True)
+    skills_languages = Skill.objects.filter(is_active=True, category='language')
+    skills_frameworks = Skill.objects.filter(is_active=True, category='framework')    
     projects = Project.objects.all().order_by('-created_at')
+    educations = Education.objects.all().order_by('-id')
+    experiences = Experience.objects.all().order_by('-id')
 
     context = {
         'profile': profile,
-        'skills': skills,
+        'skills_languages': skills_languages,
+        'skills_frameworks': skills_frameworks,
         'projects': projects,
+        'educations': educations,
+        'experiences': experiences,
     }
 
     return render(request, 'base/home.html', context)
+
+
+def project_detail(request, pk):
+    profile = Profile.objects.first()
+    project = get_object_or_404(Project, pk=pk)
+
+    context = {
+        'profile' : profile,
+        'project' : project
+    }
+    return render(request, 'base/project_detail.html', context)
+
+       

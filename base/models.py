@@ -18,7 +18,12 @@ class Profile(models.Model):
         verbose_name_plural = "Profil Ayarları"
 
 class Skill(models.Model):
+    CATEGORY_CHOICES = (
+        ('language', 'Yazılım Dili'),
+        ('framework', 'Framework / Kütüphane'),
+    )
     name = models.CharField(max_length=50, verbose_name="Yetenek")
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='language', verbose_name="Kategori")
     level = models.IntegerField(default=0, verbose_name="Yüzde (%)", help_text="0-100 arası bir değer girin")
     is_active = models.BooleanField(default=True, verbose_name="Sitede Göster")
 
@@ -33,7 +38,6 @@ class Skill(models.Model):
 class Project(models.Model):
     name = models.CharField(max_length=50, verbose_name="Proje Başlığı")
     description = models.TextField(verbose_name="Proje Açıklaması") 
-    image = models.ImageField(upload_to="projects/", blank=True, verbose_name="Proje Görseli")
     tags = models.CharField(max_length=100, verbose_name="Etiketler (Örn: Django, React)", help_text="Virgülle ayırın")
     live_link = models.URLField(blank=True, verbose_name="Canlı Site Linki")
     source_link = models.URLField(blank=True, verbose_name="Kaynak Kodu Linki")
@@ -46,6 +50,32 @@ class Project(models.Model):
         verbose_name = "Proje"
         verbose_name_plural = "Projeler"
 
+class Education(models.Model):
+    school_name = models.CharField(max_length=100, verbose_name="Okul Adı")
+    major = models.CharField(max_length=50, verbose_name="Bölüm Adı")
+    duration = models.CharField(max_length=50, verbose_name="Süre (Örn: 2020 - 2024)")
+    grade = models.CharField(max_length=25, verbose_name="Not ortalaması (Opsiyonel)", blank=True)
+
+    def __str__(self):
+        return self.school_name
+
+    class Meta:
+        verbose_name = "Eğitim"
+        verbose_name_plural = "Eğitim Bilgileri"
+
+
+class Experience(models.Model):
+    company_name = models.CharField(max_length=100, verbose_name="Şirket Adı")
+    position = models.CharField(max_length=50, verbose_name="Pozisyon")
+    duration = models.CharField(max_length=50, verbose_name="Çalışma Süresi")
+    descreption = models.TextField(verbose_name="İş Tanımı / Açıklama")
+
+    def __str__(self):
+        return self.company_name
+
+    class Meta:
+        verbose_name = "Deneyim"
+        verbose_name_plural = "Deneyimler"
 
 class ContactMessage(models.Model):
     name = models.CharField(max_length=50, verbose_name="Gönderen Adı")

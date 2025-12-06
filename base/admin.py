@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile, Project, Skill, ContactMessage
+from .models import Profile, Project, Skill, ContactMessage, Education, Experience
 
 
 @admin.register(Profile)
@@ -13,6 +13,7 @@ class ProjectAdmin(admin.ModelAdmin):
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
     list_display = ('name', 'level', 'is_active')
+    list_filter = ('category', 'is_active')
     list_editable = ('level', 'is_active')
 
 @admin.register(ContactMessage)
@@ -21,3 +22,10 @@ class ContactMessageAdmin(admin.ModelAdmin):
     list_filter = ('is_read',)
     readonly_fields = ('name', 'email', 'subject', 'message', 'created_at')
 
+@admin.register(Education)
+class EducationAmin(admin.ModelAdmin):
+    list_display = ('school_name', 'major', 'duration')
+
+@admin.register(Experience)
+class ExperienceAdmin(admin.ModelAdmin):
+    list_display = ('company_name', 'position', 'duration')
