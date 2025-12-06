@@ -1,3 +1,5 @@
 from django.shortcuts import render
+from .models import Profile, Skill, Project
 
-# Create your views here.
+def home(request):
+    return  render(request, 'base/base.html')
