@@ -39,12 +39,13 @@ class Skill(models.Model):
 
 
 class Project(models.Model):
-    name = models.CharField(max_length=50, verbose_name="Proje Başlığı")
+    name = models.CharField(max_length=100, verbose_name="Proje Başlığı")
     description = models.TextField(verbose_name="Proje Açıklaması") 
     tags = models.CharField(max_length=100, verbose_name="Etiketler (Örn: Django, React)", help_text="Virgülle ayırın")
     live_link = models.URLField(blank=True, verbose_name="Canlı Site Linki")
     source_link = models.URLField(blank=True, verbose_name="Kaynak Kodu Linki")
     created_at = models.DateTimeField(auto_now_add=True)
+    order = models.IntegerField(default=0, verbose_name="Sıralama (Örn: 1, 2, 3)", blank=True)
 
     def __str__(self):
         return self.name
@@ -52,6 +53,7 @@ class Project(models.Model):
     class Meta:
         verbose_name = "Proje"
         verbose_name_plural = "Projeler"
+        ordering = ['order', '-created_at']
 
 class ProjectImage(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="images")
@@ -62,7 +64,7 @@ class ProjectImage(models.Model):
 
 class Education(models.Model):
     school_name = models.CharField(max_length=100, verbose_name="Okul Adı")
-    major = models.CharField(max_length=50, verbose_name="Bölüm Adı")
+    major = models.CharField(max_length=50, verbose_name="Bölüm Adı", blank=True)
     duration = models.CharField(max_length=50, verbose_name="Süre (Örn: 2020 - 2024)")
     grade = models.CharField(max_length=25, verbose_name="Not ortalaması (Opsiyonel)", blank=True)
 
@@ -86,6 +88,19 @@ class Experience(models.Model):
     class Meta:
         verbose_name = "Deneyim"
         verbose_name_plural = "Deneyimler"
+
+class Certificate(models.Model):
+    name = models.CharField(max_length=50, verbose_name="Sertifika Adı")
+    issuer = models.CharField(max_length=50, verbose_name="Veren Kurum (Örn: Udemy, Coursera)")
+    date = models.DateField(verbose_name="Alınma Tarihi")
+    link = models.URLField(blank=True, verbose_name="Sertifika Linki (Opsiyonel)")
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = "Sertifika"
+        verbose_name_plural = "Sertifikalar"
 
 class ContactMessage(models.Model):
     name = models.CharField(max_length=50, verbose_name="Gönderen Adı")

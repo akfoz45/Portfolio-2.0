@@ -126,3 +126,117 @@ function changeSlide(direction) {
 function goToSlide(index) {
     showSlide(index);
 }
+
+// --- BACK TO TOP BUTONU ---
+const backToTopBtn = document.getElementById("backToTop");
+
+window.onscroll = function() {
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        backToTopBtn.classList.remove("translate-y-20", "opacity-0");
+    } else {
+        backToTopBtn.classList.add("translate-y-20", "opacity-0");
+    }
+};
+
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// --- SCROLL ANIMASYONLARI (REVEAL) ---
+function reveal() {
+    var reveals = document.querySelectorAll(".reveal");
+
+    for (var i = 0; i < reveals.length; i++) {
+        var windowHeight = window.innerHeight;
+        var elementTop = reveals[i].getBoundingClientRect().top;
+        var elementVisible = 150; // Eleman ekranın ne kadar içine girince görünsün
+
+        if (elementTop < windowHeight - elementVisible) {
+            reveals[i].classList.add("active");
+        }
+    }
+}
+
+window.addEventListener("scroll", reveal);
+reveal();
+
+// --- PROJE "DAHA FAZLA GÖSTER" ÖZELLİĞİ (FADE-OUT İLE) ---
+document.addEventListener('DOMContentLoaded', function() {
+    const items = document.querySelectorAll('.project-item');
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    const loadMoreContainer = document.getElementById('loadMoreContainer');
+    const projectsSection = document.getElementById('projects');
+    
+    // Başlangıçta görünecek proje sayısı
+    const itemsToShow = 3; 
+    let isExpanded = false;
+
+    // Eğer proje sayısı sınırımızdan fazlaysa butonu göster
+    if (items.length > itemsToShow) {
+        loadMoreContainer.classList.remove('hidden');
+
+        // Fazlalıkları gizle
+        for (let i = itemsToShow; i < items.length; i++) {
+            items[i].classList.add('hidden');
+        }
+
+        loadMoreBtn.addEventListener('click', function() {
+            if (!isExpanded) {
+                // --- AÇILMA MODU ---
+                let delay = 0; 
+                
+                items.forEach((item, index) => {
+                    if (index >= itemsToShow) {
+                        item.classList.remove('hidden');
+                        
+                        // Açılma animasyonunu ekle
+                        item.classList.remove('fade-out'); 
+                        item.classList.add('fade-in-up');
+                        item.style.animationDelay = delay + 's';
+                        
+                        item.addEventListener('animationend', () => {
+                            item.style.animationDelay = '';
+                            item.style.opacity = ''; 
+                            item.style.transform = '';
+                        }, { once: true });
+
+                        delay += 0.1; 
+                    }
+                });
+
+                loadMoreBtn.innerHTML = '<i class="fa-solid fa-angle-up mr-2"></i> Daha Az Göster';
+                isExpanded = true;
+
+            } else {
+                // --- KAPANMA MODU ---
+                
+                projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                let delay = 0;
+                for (let i = items.length - 1; i >= itemsToShow; i--) {
+                    const item = items[i];
+                    item.classList.remove('fade-in-up'); 
+                    item.classList.add('fade-out');
+                    item.style.animationDelay = (delay / 2) + 's'; 
+                    delay += 0.1;
+                }
+
+                setTimeout(() => {
+                    items.forEach((item, index) => {
+                        if (index >= itemsToShow) {
+                            item.classList.add('hidden');
+                            item.classList.remove('fade-out'); 
+                            item.style.animationDelay = '';
+                            item.style.opacity = '';
+                            item.style.transform = '';
+                        }
+                    });
+                    
+                    loadMoreBtn.textContent = 'Daha Fazla Göster';
+                }, 600 + (delay * 100)); 
+
+                isExpanded = false;
+            }
+        });
+    }
+});

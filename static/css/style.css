@@ -43,3 +43,35 @@ body {
 .fa-database { color: #F29111 !important; }
 .fa-cuttlefish { color: #A8B9CC !important; } 
 .fa-code { color: #64ffda !important; }
+
+/* Scroll Reveal Animasyonu */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+section {
+    scroll-margin-top: 100px; 
+}
+
+/* Kapanma Animasyonu */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+.fade-out {
+    animation: fadeOut 0.5s ease-out forwards;
+}

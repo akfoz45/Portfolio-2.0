@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile, Project, Skill, ContactMessage, Education, Experience, ProjectImage
+from .models import Profile, Project, Skill, ContactMessage, Education, Experience, ProjectImage, Certificate
 
 
 @admin.register(Profile)
@@ -12,7 +12,9 @@ class ProjectImageInline(admin.TabularInline):
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('name', 'tags', 'created_at')
+    list_display = ('name', 'tags', 'order', 'created_at')
+    list_editable = ('order',)
+    ordering = ('order',)
     inlines = [ProjectImageInline]
 
 @admin.register(Skill)
@@ -35,4 +37,6 @@ class EducationAmin(admin.ModelAdmin):
 class ExperienceAdmin(admin.ModelAdmin):
     list_display = ('company_name', 'position', 'duration')
 
-
+@admin.register(Certificate)
+class CertificateAdmin(admin.ModelAdmin):
+    list_display = ('name', 'issuer', 'date')

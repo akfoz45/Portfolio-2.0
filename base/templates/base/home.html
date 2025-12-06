@@ -30,7 +30,8 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -40,16 +41,17 @@
     <nav class="fixed w-full z-50 bg-navy/90 backdrop-blur-md border-b border-lightnavy transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
-                <a href="#" class="text-green font-mono text-xl font-bold tracking-widest border-2 border-green p-1 rounded hover:bg-green/10 transition">
+                
+                <a href="#" class="text-green font-mono text-2xl font-bold tracking-widest hover:text-white transition">
                     {{ profile.name }}
                 </a>
                 
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#home" class="text-sm font-mono text-lightslate hover:text-green transition">Home</a>
-                    <a href="#about" class="text-sm font-mono text-lightslate hover:text-green transition">About</a>
-                    <a href="#skills" class="text-sm font-mono text-lightslate hover:text-green transition">Skills</a>
-                    <a href="#projects" class="text-sm font-mono text-lightslate hover:text-green transition">Projects</a>
-                    <a href="#contact" class="text-sm font-mono text-lightslate hover:text-green transition">Contact</a>
+                    <a href="#home" class="text-base font-mono text-lightslate hover:text-green transition">Home</a>
+                    <a href="#about" class="text-base font-mono text-lightslate hover:text-green transition">About</a>
+                    <a href="#skills" class="text-base font-mono text-lightslate hover:text-green transition">Skills</a>
+                    <a href="#projects" class="text-base font-mono text-lightslate hover:text-green transition">Projects</a>
+                    <a href="#contact" class="text-base font-mono text-lightslate hover:text-green transition">Contact</a>
                 </div>
             </div>
         </div>
@@ -89,7 +91,7 @@
             </div>
         </section>
 
-        <section id="about" class="py-24 max-w-7xl mx-auto px-6 lg:px-8">
+        <section id="about" class="py-24 max-w-7xl mx-auto px-6 lg:px-8 reveal">
             <h2 class="text-3xl md:text-4xl font-bold text-white mb-8 text-center">
                 Hakkımda
             </h2>
@@ -132,6 +134,51 @@
                     {% endfor %}
                 </div>
             </div>
+
+            {% if certificates %}
+            <div id="certificates" class="mt-20">
+                <h3 class="text-2xl font-bold text-white mb-12 flex items-center justify-center gap-2">
+                    <span class="text-green font-mono text-xl"><i class="fa-solid fa-certificate"></i></span> Sertifikalar
+                </h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for cert in certificates %}
+                    <div class="bg-lightnavy p-6 rounded-xl border border-lightestnavy hover:border-green/50 transition duration-300 group relative overflow-hidden">
+                        
+                        <div class="absolute -right-4 -top-4 text-8xl text-white/5 rotate-12 group-hover:text-green/5 transition">
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+
+                        <div class="relative z-10">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h4 class="text-white font-bold text-lg leading-tight group-hover:text-green transition mb-1">
+                                        {{ cert.name }}
+                                    </h4>
+                                    <p class="text-sm text-slate font-mono">
+                                        {{ cert.issuer }}
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between mt-6 border-t border-white/5 pt-4">
+                                <span class="text-xs text-slate/60 font-mono flex items-center gap-2">
+                                    <i class="fa-regular fa-calendar"></i> {{ cert.date|date:"F Y" }}
+                                </span>
+                                
+                                {% if cert.link %}
+                                <a href="{{ cert.link }}" target="_blank" class="text-green text-sm hover:underline flex items-center gap-1">
+                                    Görüntüle <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
         </section>
 
         <section id="skills" class="py-24 max-w-6xl mx-auto">
@@ -190,13 +237,15 @@
             </div>
         </section>
 
-        <section id="projects" class="py-24">
+        <section id="projects" class="py-24 reveal">
             <h2 class="text-3xl md:text-4xl font-bold text-white mb-16 text-center">
                 Projeler
             </h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="projectsGrid">
                 {% for project in projects %}
-                <div class="bg-[#112240] rounded-xl overflow-hidden hover:-translate-y-2 transition duration-300 border border-transparent hover:border-green/30 group flex flex-col h-full shadow-xl">
+                
+                <div class="project-item bg-[#112240] rounded-xl overflow-hidden hover:-translate-y-2 transition duration-300 border border-transparent hover:border-green/30 group flex flex-col h-full shadow-xl">
                     
                     <div class="h-48 w-full bg-[#0a192f] overflow-hidden relative border-b border-[#233554]">
                         <a href="{% url 'project_detail' project.id %}" class="block w-full h-full group-hover:scale-105 transition-transform duration-500">
@@ -253,9 +302,15 @@
                 </div>
                 {% endfor %}
             </div>
+
+            <div class="text-center mt-12 hidden" id="loadMoreContainer">
+                <button id="loadMoreBtn" class="px-8 py-3 border border-green text-green font-mono rounded hover:bg-green/10 transition duration-300">
+                    Daha Fazla Göster
+                </button>
+            </div>
         </section>
 
-        <section id="contact" class="py-24 mb-20">
+        <section id="contact" class="py-24 mb-20 reveal">
             <div class="flex items-center gap-4 mb-12 justify-center">
                 <h2 class="text-3xl font-bold text-white">İletişim</h2>
             </div>
@@ -342,10 +397,32 @@
 
     </main>
 
-    <footer class="bg-lightnavy text-center py-6 text-xs font-mono text-slate border-t border-lightestnavy mt-auto">
-        <p>Designed & Built by {{ profile.name }}</p>
-        <p class="mt-1 opacity-50">Django & Tailwind CSS</p>
+    <footer class="bg-lightnavy py-8 text-center border-t border-lightestnavy mt-auto relative z-10">
+        <div class="flex justify-center gap-6 mb-4 text-slate">
+            {% if profile.github_link %}
+            <a href="{{ profile.github_link }}" target="_blank" class="hover:text-green hover:-translate-y-1 transition text-xl"><i class="fa-brands fa-github"></i></a>
+            {% endif %}
+            {% if profile.linkedin_link %}
+            <a href="{{ profile.linkedin_link }}" target="_blank" class="hover:text-green hover:-translate-y-1 transition text-xl"><i class="fa-brands fa-linkedin"></i></a>
+            {% endif %}
+            <a href="mailto:{{ profile.email }}" class="hover:text-green hover:-translate-y-1 transition text-xl"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+        
+        <p class="text-xs font-mono text-slate">
+            &copy; <span id="year"></span> {{ profile.name }}. All rights reserved.
+        </p>
+        <p class="text-[10px] font-mono text-slate/50 mt-2">
+            Built with Django & Tailwind CSS
+        </p>
     </footer>
+
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+
+    <button id="backToTop" class="fixed bottom-8 right-8 bg-green text-navy w-12 h-12 rounded-full flex items-center justify-center text-xl shadow-lg translate-y-20 opacity-0 transition-all duration-500 z-50 hover:bg-white cursor-pointer" onclick="scrollToTop()">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
 
     <script src="{% static 'js/script.js' %}"></script>
 </body>

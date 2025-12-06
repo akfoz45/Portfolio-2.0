@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import JsonResponse
-from .models import Profile, Skill, Project, ContactMessage, Experience, Education
+from .models import Profile, Skill, Project, ContactMessage, Experience, Education, Certificate
 
 def home(request):
 
@@ -25,9 +25,10 @@ def home(request):
     skills_languages = Skill.objects.filter(is_active=True, category='language')
     skills_frameworks = Skill.objects.filter(is_active=True, category='framework')  
     skills_tools = Skill.objects.filter(is_active=True, category='tool')  
-    projects = Project.objects.all().order_by('-created_at')
+    projects = Project.objects.all().order_by('order')
     educations = Education.objects.all().order_by('-id')
     experiences = Experience.objects.all().order_by('-id')
+    certificates = Certificate.objects.all().order_by('-date')
 
     context = {
         'profile': profile,
@@ -37,6 +38,7 @@ def home(request):
         'projects': projects,
         'educations': educations,
         'experiences': experiences,
+        'certificates': certificates,
     }
 
     return render(request, 'base/home.html', context)
