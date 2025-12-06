@@ -8,7 +8,7 @@ class ProfileAdmin(admin.ModelAdmin):
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('title', 'tags', 'created_at')
+    list_display = ('name', 'tags', 'created_at')
 
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):

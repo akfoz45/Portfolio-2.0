@@ -26,12 +26,12 @@ class Skill(models.Model):
         return self.name
     
     class Meta:
-        verbose_name = "Profil Ayarları"
-        verbose_name_plural = "Profil Ayarları"
+        verbose_name = "Yetenekı"
+        verbose_name_plural = "Yetenekler"
 
 
 class Project(models.Model):
-    title = models.CharField(max_length=50, verbose_name="Proje Başlığı")
+    name = models.CharField(max_length=50, verbose_name="Proje Başlığı")
     description = models.TextField(verbose_name="Proje Açıklaması") 
     image = models.ImageField(upload_to="projects/", blank=True, verbose_name="Proje Görseli")
     tags = models.CharField(max_length=100, verbose_name="Etiketler (Örn: Django, React)", help_text="Virgülle ayırın")
@@ -43,8 +43,8 @@ class Project(models.Model):
         return self.name
     
     class Meta:
-        verbose_name = "Profil Ayarları"
-        verbose_name_plural = "Profil Ayarları"
+        verbose_name = "Proje"
+        verbose_name_plural = "Projeler"
 
 
 class ContactMessage(models.Model):
@@ -59,5 +59,5 @@ class ContactMessage(models.Model):
         return self.name
     
     class Meta:
-        verbose_name = "Profil Ayarları"
-        verbose_name_plural = "Profil Ayarları"
+        verbose_name = "İletişim Mesajı"
+        verbose_name_plural = "İletişim Mesajları"
