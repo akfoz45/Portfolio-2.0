@@ -2,13 +2,19 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
+/* Navbar Altında Kalan Bölümler İçin Kaydırma Payı */
+section {
+    scroll-margin-top: 100px; 
+}
+
 /* Scrollbar Tasarımı */
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: #0a192f; }
 ::-webkit-scrollbar-thumb { background: #495670; border-radius: 5px; }
 ::-webkit-scrollbar-thumb:hover { background: #64ffda; }
 
-/* Animasyonlar */
+/* --- ANİMASYONLAR --- */
+
 .fade-in-up { 
     animation: fadeInUp 0.8s ease-out forwards; 
     opacity: 0; 
@@ -18,6 +24,36 @@ body {
 @keyframes fadeInUp { 
     to { opacity: 1; transform: translateY(0); } 
 }
+
+/* Kapanma Animasyonu (Fade Out) - "Daha Az Göster" için */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+.fade-out {
+    animation: fadeOut 0.5s ease-out forwards;
+}
+
+/* Scroll Reveal */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- GÖRSEL EFEKTLER --- */
 
 /* Glass Effect (Cam Efekti) */
 .glass {
@@ -43,35 +79,3 @@ body {
 .fa-database { color: #F29111 !important; }
 .fa-cuttlefish { color: #A8B9CC !important; } 
 .fa-code { color: #64ffda !important; }
-
-/* Scroll Reveal Animasyonu */
-.reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s ease-out;
-}
-
-.reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-section {
-    scroll-margin-top: 100px; 
-}
-
-/* Kapanma Animasyonu */
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    to {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-}
-
-.fade-out {
-    animation: fadeOut 0.5s ease-out forwards;
-}

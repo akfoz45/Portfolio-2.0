@@ -1,5 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
     
+    // --- 1. FOOTER YIL GÜNCELLEME ---
+    const yearSpan = document.getElementById("year");
+    if(yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+    }
+
+    // --- 2. İLETİŞİM FORMU (AJAX) ---
     const contactForm = document.getElementById('contactForm');
 
     if (contactForm) {
@@ -29,33 +36,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.success) {
                     this.reset(); 
                     
-                    // --- GÜNCELLENEN TASARIM ---
                     Swal.fire({
                         title: 'Mesajınız Alındı!',
                         text: 'En kısa sürede size dönüş yapacağım.',
                         icon: 'success',
-                        
-                        // Temel Renk Ayarları (Fallback)
                         background: '#112240', 
                         color: '#e6f1ff',
                         iconColor: '#64ffda',
-                        
-                        // Tailwind ile Özel Tasarım
                         buttonsStyling: false, 
                         customClass: {
                             popup: 'bg-[#112240] border border-[#233554] rounded-xl shadow-2xl p-8',
                             title: 'text-[#e6f1ff] font-bold text-2xl font-sans mb-2',
                             htmlContainer: 'text-[#8892b0] text-base font-sans',
                             confirmButton: 'bg-[#64ffda] text-[#0a192f] font-bold font-mono py-3 px-8 rounded hover:bg-opacity-80 transition duration-300 mt-4 focus:outline-none',
-                            icon: 'border-[#64ffda] text-[#64ffda]'
                         }
                     });
                 }
             })
             .catch(error => {
                 console.error('Hata:', error);
-                
-                // --- HATA MESAJI TASARIMI ---
                 Swal.fire({
                     title: 'Bir Hata Oluştu!',
                     text: 'Lütfen daha sonra tekrar deneyin.',
@@ -80,9 +79,86 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+
+    // --- 3. PROJE "DAHA FAZLA / DAHA AZ GÖSTER" (ANİMASYONLU) ---
+    const items = document.querySelectorAll('.project-item');
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    const loadMoreContainer = document.getElementById('loadMoreContainer');
+    const projectsSection = document.getElementById('projects');
+    
+    const itemsToShow = 3; 
+    let isExpanded = false;
+
+    if (items.length > itemsToShow) {
+        loadMoreContainer.classList.remove('hidden');
+
+        for (let i = itemsToShow; i < items.length; i++) {
+            items[i].classList.add('hidden');
+        }
+
+        loadMoreBtn.addEventListener('click', function() {
+            if (!isExpanded) {
+                // --- AÇILMA MODU ---
+                let delay = 0; 
+                
+                items.forEach((item, index) => {
+                    if (index >= itemsToShow) {
+                        item.classList.remove('hidden');
+                        
+                        item.classList.remove('fade-out'); 
+                        item.classList.add('fade-in-up');
+                        item.style.animationDelay = delay + 's';
+                        
+                        item.addEventListener('animationend', () => {
+                            item.style.animationDelay = '';
+                            item.style.opacity = ''; 
+                            item.style.transform = '';
+                        }, { once: true });
+
+                        delay += 0.1; 
+                    }
+                });
+
+                loadMoreBtn.innerHTML = '<i class="fa-solid fa-angle-up mr-2"></i> Daha Az Göster';
+                isExpanded = true;
+
+            } else {
+                // --- KAPANMA MODU ---
+                
+                projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                let delay = 0;
+                // Sondan başa doğru animasyon ver
+                for (let i = items.length - 1; i >= itemsToShow; i--) {
+                    const item = items[i];
+                    item.classList.remove('fade-in-up'); 
+                    item.classList.add('fade-out');
+                    item.style.animationDelay = (delay / 2) + 's'; 
+                    delay += 0.1;
+                }
+
+                setTimeout(() => {
+                    items.forEach((item, index) => {
+                        if (index >= itemsToShow) {
+                            item.classList.add('hidden');
+                            item.classList.remove('fade-out'); 
+                            item.style.animationDelay = '';
+                            item.style.opacity = '';
+                            item.style.transform = '';
+                        }
+                    });
+                    
+                    loadMoreBtn.textContent = 'Daha Fazla Göster';
+                }, 600 + (delay * 100)); 
+
+                isExpanded = false;
+            }
+        });
+    }
 });
 
-// --- PROJE SLIDER (GALERİ) KODLARI ---
+
+// --- 4. PROJE SLIDER (GLOBAL FONKSİYONLAR) ---
 let currentSlide = 0;
 
 function showSlide(index) {
@@ -127,29 +203,21 @@ function goToSlide(index) {
     showSlide(index);
 }
 
-// --- BACK TO TOP BUTONU ---
-const backToTopBtn = document.getElementById("backToTop");
 
-window.onscroll = function() {
-    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-        backToTopBtn.classList.remove("translate-y-20", "opacity-0");
-    } else {
-        backToTopBtn.classList.add("translate-y-20", "opacity-0");
-    }
-};
+// --- 5. BACK TO TOP & SCROLL REVEAL ---
+const backToTopBtn = document.getElementById("backToTop");
 
 function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// --- SCROLL ANIMASYONLARI (REVEAL) ---
 function reveal() {
     var reveals = document.querySelectorAll(".reveal");
 
     for (var i = 0; i < reveals.length; i++) {
         var windowHeight = window.innerHeight;
         var elementTop = reveals[i].getBoundingClientRect().top;
-        var elementVisible = 150; // Eleman ekranın ne kadar içine girince görünsün
+        var elementVisible = 150; 
 
         if (elementTop < windowHeight - elementVisible) {
             reveals[i].classList.add("active");
@@ -157,86 +225,17 @@ function reveal() {
     }
 }
 
-window.addEventListener("scroll", reveal);
-reveal();
-
-// --- PROJE "DAHA FAZLA GÖSTER" ÖZELLİĞİ (FADE-OUT İLE) ---
-document.addEventListener('DOMContentLoaded', function() {
-    const items = document.querySelectorAll('.project-item');
-    const loadMoreBtn = document.getElementById('loadMoreBtn');
-    const loadMoreContainer = document.getElementById('loadMoreContainer');
-    const projectsSection = document.getElementById('projects');
-    
-    // Başlangıçta görünecek proje sayısı
-    const itemsToShow = 3; 
-    let isExpanded = false;
-
-    // Eğer proje sayısı sınırımızdan fazlaysa butonu göster
-    if (items.length > itemsToShow) {
-        loadMoreContainer.classList.remove('hidden');
-
-        // Fazlalıkları gizle
-        for (let i = itemsToShow; i < items.length; i++) {
-            items[i].classList.add('hidden');
+window.addEventListener("scroll", function() {
+    // Back to Top Göster/Gizle
+    if (backToTopBtn) {
+        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+            backToTopBtn.classList.remove("translate-y-20", "opacity-0");
+        } else {
+            backToTopBtn.classList.add("translate-y-20", "opacity-0");
         }
-
-        loadMoreBtn.addEventListener('click', function() {
-            if (!isExpanded) {
-                // --- AÇILMA MODU ---
-                let delay = 0; 
-                
-                items.forEach((item, index) => {
-                    if (index >= itemsToShow) {
-                        item.classList.remove('hidden');
-                        
-                        // Açılma animasyonunu ekle
-                        item.classList.remove('fade-out'); 
-                        item.classList.add('fade-in-up');
-                        item.style.animationDelay = delay + 's';
-                        
-                        item.addEventListener('animationend', () => {
-                            item.style.animationDelay = '';
-                            item.style.opacity = ''; 
-                            item.style.transform = '';
-                        }, { once: true });
-
-                        delay += 0.1; 
-                    }
-                });
-
-                loadMoreBtn.innerHTML = '<i class="fa-solid fa-angle-up mr-2"></i> Daha Az Göster';
-                isExpanded = true;
-
-            } else {
-                // --- KAPANMA MODU ---
-                
-                projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-                let delay = 0;
-                for (let i = items.length - 1; i >= itemsToShow; i--) {
-                    const item = items[i];
-                    item.classList.remove('fade-in-up'); 
-                    item.classList.add('fade-out');
-                    item.style.animationDelay = (delay / 2) + 's'; 
-                    delay += 0.1;
-                }
-
-                setTimeout(() => {
-                    items.forEach((item, index) => {
-                        if (index >= itemsToShow) {
-                            item.classList.add('hidden');
-                            item.classList.remove('fade-out'); 
-                            item.style.animationDelay = '';
-                            item.style.opacity = '';
-                            item.style.transform = '';
-                        }
-                    });
-                    
-                    loadMoreBtn.textContent = 'Daha Fazla Göster';
-                }, 600 + (delay * 100)); 
-
-                isExpanded = false;
-            }
-        });
     }
+    
+    reveal();
 });
+
+reveal();

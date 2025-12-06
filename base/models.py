@@ -67,6 +67,7 @@ class Education(models.Model):
     major = models.CharField(max_length=50, verbose_name="Bölüm Adı", blank=True)
     duration = models.CharField(max_length=50, verbose_name="Süre (Örn: 2020 - 2024)")
     grade = models.CharField(max_length=25, verbose_name="Not ortalaması (Opsiyonel)", blank=True)
+    order = models.IntegerField(default=0, verbose_name="Sıralama (Örn: 1, 2, 3)", blank=True)
 
     def __str__(self):
         return self.school_name
@@ -74,6 +75,7 @@ class Education(models.Model):
     class Meta:
         verbose_name = "Eğitim"
         verbose_name_plural = "Eğitim Bilgileri"
+        ordering = ['order']
 
 
 class Experience(models.Model):
@@ -81,6 +83,7 @@ class Experience(models.Model):
     position = models.CharField(max_length=50, verbose_name="Pozisyon")
     duration = models.CharField(max_length=50, verbose_name="Çalışma Süresi")
     descreption = models.TextField(verbose_name="İş Tanımı / Açıklama")
+    order = models.IntegerField(default=0, verbose_name="Sıralama (Örn: 1, 2, 3)", blank=True)
 
     def __str__(self):
         return self.company_name
@@ -88,12 +91,14 @@ class Experience(models.Model):
     class Meta:
         verbose_name = "Deneyim"
         verbose_name_plural = "Deneyimler"
+        ordering = ['order']
 
 class Certificate(models.Model):
     name = models.CharField(max_length=50, verbose_name="Sertifika Adı")
     issuer = models.CharField(max_length=50, verbose_name="Veren Kurum (Örn: Udemy, Coursera)")
     date = models.DateField(verbose_name="Alınma Tarihi")
     link = models.URLField(blank=True, verbose_name="Sertifika Linki (Opsiyonel)")
+    order = models.IntegerField(default=0, verbose_name="Sıralama (Örn: 1, 2, 3)", blank=True)
 
     def __str__(self):
         return self.name
@@ -101,6 +106,7 @@ class Certificate(models.Model):
     class Meta:
         verbose_name = "Sertifika"
         verbose_name_plural = "Sertifikalar"
+        ordering = ['order', '-date']
 
 class ContactMessage(models.Model):
     name = models.CharField(max_length=50, verbose_name="Gönderen Adı")

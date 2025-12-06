@@ -31,12 +31,18 @@ class ContactMessageAdmin(admin.ModelAdmin):
 
 @admin.register(Education)
 class EducationAmin(admin.ModelAdmin):
-    list_display = ('school_name', 'major', 'duration')
+    list_display = ('school_name', 'major', 'order', 'duration')
+    list_editable = ('order',)
+    ordering = ('order',)
 
 @admin.register(Experience)
 class ExperienceAdmin(admin.ModelAdmin):
-    list_display = ('company_name', 'position', 'duration')
+    list_display = ('company_name', 'position', 'order', 'duration')
+    list_editable = ('order',)
+    ordering = ('order',)
 
 @admin.register(Certificate)
 class CertificateAdmin(admin.ModelAdmin):
-    list_display = ('name', 'issuer', 'date')
+    list_display = ('name', 'issuer', 'order', 'date')
+    list_editable = ('order',)
+    ordering = ('order',)

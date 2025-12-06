@@ -26,9 +26,9 @@ def home(request):
     skills_frameworks = Skill.objects.filter(is_active=True, category='framework')  
     skills_tools = Skill.objects.filter(is_active=True, category='tool')  
     projects = Project.objects.all().order_by('order')
-    educations = Education.objects.all().order_by('-id')
-    experiences = Experience.objects.all().order_by('-id')
-    certificates = Certificate.objects.all().order_by('-date')
+    educations = Education.objects.all().order_by('order')
+    experiences = Experience.objects.all().order_by('order')
+    certificates = Certificate.objects.all().order_by('order')
 
     context = {
         'profile': profile,
