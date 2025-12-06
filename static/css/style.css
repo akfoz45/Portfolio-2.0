@@ -19,7 +19,7 @@ body {
     to { opacity: 1; transform: translateY(0); } 
 }
 
-/* Glass Effect*/
+/* Glass Effect (Cam Efekti) */
 .glass {
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);

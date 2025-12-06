@@ -1,4 +1,3 @@
-// --- İLETİŞİM FORMU KODLARI ---
 document.addEventListener('DOMContentLoaded', function() {
     
     const contactForm = document.getElementById('contactForm');
@@ -30,28 +29,46 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.success) {
                     this.reset(); 
                     
+                    // --- GÜNCELLENEN TASARIM ---
                     Swal.fire({
-                        title: 'Harika!',
-                        text: 'Mesajınız başarıyla ulaştı. En kısa sürede döneceğim.',
+                        title: 'Mesajınız Alındı!',
+                        text: 'En kısa sürede size dönüş yapacağım.',
                         icon: 'success',
-                        confirmButtonText: 'Tamam',
-                        confirmButtonColor: '#4f46e5',
-                        background: '#1e293b',
-                        color: '#fff',
-                        iconColor: '#4f46e5'
+                        
+                        // Temel Renk Ayarları (Fallback)
+                        background: '#112240', 
+                        color: '#e6f1ff',
+                        iconColor: '#64ffda',
+                        
+                        // Tailwind ile Özel Tasarım
+                        buttonsStyling: false, 
+                        customClass: {
+                            popup: 'bg-[#112240] border border-[#233554] rounded-xl shadow-2xl p-8',
+                            title: 'text-[#e6f1ff] font-bold text-2xl font-sans mb-2',
+                            htmlContainer: 'text-[#8892b0] text-base font-sans',
+                            confirmButton: 'bg-[#64ffda] text-[#0a192f] font-bold font-mono py-3 px-8 rounded hover:bg-opacity-80 transition duration-300 mt-4 focus:outline-none',
+                            icon: 'border-[#64ffda] text-[#64ffda]'
+                        }
                     });
                 }
             })
             .catch(error => {
                 console.error('Hata:', error);
+                
+                // --- HATA MESAJI TASARIMI ---
                 Swal.fire({
-                    title: 'Hata!',
-                    text: 'Bir sorun oluştu. Lütfen daha sonra tekrar deneyin.',
+                    title: 'Bir Hata Oluştu!',
+                    text: 'Lütfen daha sonra tekrar deneyin.',
                     icon: 'error',
-                    confirmButtonText: 'Tamam',
-                    confirmButtonColor: '#ef4444',
-                    background: '#1e293b',
-                    color: '#fff'
+                    background: '#112240',
+                    color: '#e6f1ff',
+                    buttonsStyling: false,
+                    customClass: {
+                        popup: 'bg-[#112240] border border-[#ef4444] rounded-xl shadow-2xl p-8',
+                        title: 'text-[#e6f1ff] font-bold text-2xl font-sans',
+                        htmlContainer: 'text-[#8892b0] text-base font-sans',
+                        confirmButton: 'bg-[#ef4444] text-white font-bold font-mono py-3 px-8 rounded hover:bg-opacity-80 transition duration-300 mt-4 focus:outline-none'
+                    }
                 });
             })
             .finally(() => {

@@ -6,6 +6,7 @@ class Profile(models.Model):
     bio = models.TextField(verbose_name="Hakkımda Yazıs")
     image = models.ImageField(upload_to='profile/', blank=True, verbose_name="Profil Fotoğrafı")
     cv_file = models.FileField(upload_to='cv/', blank=True, null=True, verbose_name="CV Dosyası")
+    email = models.EmailField(max_length=100, blank=True, verbose_name="E-posta Adresi")
     github_link = models.URLField(blank=True, verbose_name="GitHub Linki")
     linkedin_link = models.URLField(blank=True, verbose_name="Linkedin Linki")
     created_at = models.DateField(auto_now_add=True)
