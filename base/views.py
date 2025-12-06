@@ -23,7 +23,8 @@ def home(request):
 
     profile = Profile.objects.first()
     skills_languages = Skill.objects.filter(is_active=True, category='language')
-    skills_frameworks = Skill.objects.filter(is_active=True, category='framework')    
+    skills_frameworks = Skill.objects.filter(is_active=True, category='framework')  
+    skills_tools = Skill.objects.filter(is_active=True, category='tool')  
     projects = Project.objects.all().order_by('-created_at')
     educations = Education.objects.all().order_by('-id')
     experiences = Experience.objects.all().order_by('-id')
@@ -32,6 +33,7 @@ def home(request):
         'profile': profile,
         'skills_languages': skills_languages,
         'skills_frameworks': skills_frameworks,
+        'skills_tools': skills_tools,
         'projects': projects,
         'educations': educations,
         'experiences': experiences,

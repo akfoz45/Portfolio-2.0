@@ -21,8 +21,10 @@ class Skill(models.Model):
     CATEGORY_CHOICES = (
         ('language', 'Yazılım Dili'),
         ('framework', 'Framework / Kütüphane'),
+        ('tool', 'Araç / Platform')
     )
     name = models.CharField(max_length=50, verbose_name="Yetenek")
+    icon = models.CharField(max_length=25, blank=True, verbose_name="İkon (FontAwesome)", help_text="Örn: Örn: fa-brands fa-python")
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='language', verbose_name="Kategori")
     level = models.IntegerField(default=0, verbose_name="Yüzde (%)", help_text="0-100 arası bir değer girin")
     is_active = models.BooleanField(default=True, verbose_name="Sitede Göster")
@@ -49,6 +51,13 @@ class Project(models.Model):
     class Meta:
         verbose_name = "Proje"
         verbose_name_plural = "Projeler"
+
+class ProjectImage(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="images")
+    image = models.ImageField(upload_to='projects/', verbose_name="Proje Görseli", blank=True)
+
+    def __str__(self):
+        return f"{self.project.name} Görseli"
 
 class Education(models.Model):
     school_name = models.CharField(max_length=100, verbose_name="Okul Adı")

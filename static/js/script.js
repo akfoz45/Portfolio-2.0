@@ -1,3 +1,4 @@
+// --- İLETİŞİM FORMU KODLARI ---
 document.addEventListener('DOMContentLoaded', function() {
     
     const contactForm = document.getElementById('contactForm');
@@ -9,9 +10,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const btn = document.getElementById('submitBtn');
             const spinner = document.getElementById('loadingSpinner');
             
-            btn.disabled = true;
-            btn.classList.add('opacity-75', 'cursor-not-allowed');
-            spinner.classList.remove('hidden');
+            if(btn) {
+                btn.disabled = true;
+                btn.classList.add('opacity-75', 'cursor-not-allowed');
+            }
+            if(spinner) spinner.classList.remove('hidden');
 
             const formData = new FormData(this);
 
@@ -52,10 +55,57 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             })
             .finally(() => {
-                btn.disabled = false;
-                btn.classList.remove('opacity-75', 'cursor-not-allowed');
-                spinner.classList.add('hidden');
+                if(btn) {
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-75', 'cursor-not-allowed');
+                }
+                if(spinner) spinner.classList.add('hidden');
             });
         });
     }
 });
+
+// --- PROJE SLIDER (GALERİ) KODLARI ---
+let currentSlide = 0;
+
+function showSlide(index) {
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    const totalSlides = slides.length;
+
+    if (totalSlides === 0) return;
+
+    if (index >= totalSlides) currentSlide = 0;
+    else if (index < 0) currentSlide = totalSlides - 1;
+    else currentSlide = index;
+
+    slides.forEach((slide, i) => {
+        if (i === currentSlide) {
+            slide.classList.remove('opacity-0', 'pointer-events-none');
+            slide.classList.add('opacity-100', 'z-10');
+        } else {
+            slide.classList.add('opacity-0', 'pointer-events-none');
+            slide.classList.remove('opacity-100', 'z-10');
+        }
+    });
+
+    if (dots.length > 0) {
+        dots.forEach((dot, i) => {
+            if (i === currentSlide) {
+                dot.classList.add('bg-green');
+                dot.classList.remove('bg-white/50');
+            } else {
+                dot.classList.add('bg-white/50');
+                dot.classList.remove('bg-green');
+            }
+        });
+    }
+}
+
+function changeSlide(direction) {
+    showSlide(currentSlide + direction);
+}
+
+function goToSlide(index) {
+    showSlide(index);
+}

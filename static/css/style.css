@@ -2,9 +2,44 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
+/* Scrollbar Tasarımı */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #0a192f; }
+::-webkit-scrollbar-thumb { background: #495670; border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: #64ffda; }
+
+/* Animasyonlar */
+.fade-in-up { 
+    animation: fadeInUp 0.8s ease-out forwards; 
+    opacity: 0; 
+    transform: translateY(20px); 
+}
+
+@keyframes fadeInUp { 
+    to { opacity: 1; transform: translateY(0); } 
+}
+
+/* Glass Effect*/
 .glass {
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px); 
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+/* Proje Kart Efekti */
+.project-card { transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1); }
+.project-card:hover { transform: translateY(-7px); }
+
+/* --- İKON RENKLERİ --- */
+.fa-python { color: #3776AB !important; }
+.fa-js, .fa-node, .fa-node-js { color: #F7DF1E !important; }
+.fa-html5 { color: #E34F26 !important; }
+.fa-css3, .fa-css3-alt { color: #1572B6 !important; }
+.fa-react { color: #61DAFB !important; }
+.fa-java { color: #007396 !important; }
+.fa-git, .fa-git-alt { color: #F05032 !important; }
+.fa-github { color: #ffffff !important; }
+.fa-database { color: #F29111 !important; }
+.fa-cuttlefish { color: #A8B9CC !important; } 
+.fa-code { color: #64ffda !important; }

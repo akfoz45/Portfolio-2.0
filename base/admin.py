@@ -1,20 +1,25 @@
 from django.contrib import admin
-from .models import Profile, Project, Skill, ContactMessage, Education, Experience
+from .models import Profile, Project, Skill, ContactMessage, Education, Experience, ProjectImage
 
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('name', 'title')
 
+class ProjectImageInline(admin.TabularInline):
+    model = ProjectImage
+    extra = 1
+
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ('name', 'tags', 'created_at')
+    inlines = [ProjectImageInline]
 
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
-    list_display = ('name', 'level', 'is_active')
+    list_display = ('name', 'level', 'icon', 'is_active')
     list_filter = ('category', 'is_active')
-    list_editable = ('level', 'is_active')
+    list_editable = ('level', 'is_active', 'icon')
 
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
@@ -29,3 +34,5 @@ class EducationAmin(admin.ModelAdmin):
 @admin.register(Experience)
 class ExperienceAdmin(admin.ModelAdmin):
     list_display = ('company_name', 'position', 'duration')
+
+
