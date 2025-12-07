@@ -1,6 +1,8 @@
 # 🌐 Akif Özdemir | Software Developer Portfolio
 
-[![Live Demo](https://img.shields.io/badge/🚀_Live Demo-2ea44f?style=for-the-badge&logo=render&logoColor=white)](https://akif-portfolyo.onrender.com)
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Online-2ea44f?style=for-the-badge&logo=render&logoColor=white)](https://akif-portfolyo.onrender.com)
+
+> ⚠️ **Notes:** Since the project is hosted on a free server (Render Free Tier), if the server is in sleep mode, the first loading of the site may take **1-2 minutes**. Please wait, subsequent loads will be faster.
 
 This repository contains the source code for my personal portfolio website, designed to showcase my software development skills and projects.
 
