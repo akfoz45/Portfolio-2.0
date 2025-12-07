@@ -1,4 +1,7 @@
 # 🌐 Akif Özdemir | Software Developer Portfolio
+
+[![Live Demo](https://img.shields.io/badge/🚀_Canlı_Demo-Yayında-2ea44f?style=for-the-badge&logo=render&logoColor=white)](https://akif-portfolyo.onrender.com)
+
 This repository contains the source code for my personal portfolio website, designed to showcase my software development skills and projects.
 
 ## ✨ Key Features
