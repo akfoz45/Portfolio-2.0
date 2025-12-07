@@ -25,7 +25,11 @@ class Skill(models.Model):
         ('tool', 'Araç / Platform')
     )
     name = models.CharField(max_length=50, verbose_name="Yetenek")
-    icon = models.CharField(max_length=25, blank=True, verbose_name="İkon (FontAwesome)", help_text="Örn: Örn: fa-brands fa-python")
+    icon = models.CharField(max_length=500, 
+                            blank=True, 
+                            verbose_name="İkon (FontAwesome veya Resim Linki)", 
+                            help_text="FontAwesome kodu (örn: fa-brands fa-python) VEYA resim linki (https://...)"
+                            )
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='language', verbose_name="Kategori")
     level = models.IntegerField(default=0, verbose_name="Yüzde (%)", help_text="0-100 arası bir değer girin")
     is_active = models.BooleanField(default=True, verbose_name="Sitede Göster")
