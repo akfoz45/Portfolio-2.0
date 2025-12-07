@@ -1,32 +1,46 @@
-# --- Django Temel ---
+# --- Python & Django Derleme ve Önbellek Dosyaları ---
 *.log
 *.pot
 *.pyc
 __pycache__/
 dbshell
-db.sqlite3
-db.sqlite3-journal
+*.sqlite3
+*.sqlite3-journal
+# Migration dosyalarından oluşturulabilen önbellek dosyaları
+*.cpython-*.pyc 
 
-# --- Sanal Ortam (Virtual Environment) ---
+
+# --- Sanal Ortamlar (venv/env) ve Güvenlik ---
+# Ortam dosyaları (ÇOK ÖNEMLİ - Zaten ekli, ama korundu)
+.env
+
+# Sanal ortam dizinleri (Zaten ekli)
 venv/
 env/
-.env
 .venv/
-/bin/
-/lib/
-/include/
 
-# --- Medya Dosyaları (Kullanıcı Yüklemeleri) ---
+# --- Medya ve Statik Dosyalar (Üretilenler) ---
+# Kullanıcı tarafından yüklenen dosyalar (Zaten ekli)
 /media/
+
+# Canlı sunucuya (Production) toplanan statik dosyalar (Zaten ekli)
 /static_root/
 /staticfiles/
+# Media/Statik dosyaların içinde oluşan geçici Mac dosyaları
+/media/.DS_Store
+/staticfiles/.DS_Store
 
-# --- IDE ve Editör Ayarları ---
+
+# --- IDE ve İşletim Sistemi Geçici Dosyaları ---
 .vscode/
 .idea/
 *.swp
 *.swo
 .DS_Store
+Thumbs.db
 
-# --- Çevresel Değişkenler (Güvenlik İçin) ---
-.env
+# --- Proje Dağıtım ve Paketleme ---
+# Proje paketlenirken oluşan dosyalar
+dist/
+build/
+*.egg-info/
