@@ -3,7 +3,7 @@ This repository contains the source code for my personal portfolio website, desi
 
 ## ✨ Key Features
 
-* **⚡ Performance Focused: Integrates django-imagekit (using ImageSpecField) to automatically optimize project images into fast-loading thumbnails, significantly boosting mobile and desktop page speed.
+* ⚡ Performance Focused: Integrates django-imagekit (using ImageSpecField) to automatically optimize project images into fast-loading thumbnails, significantly boosting mobile and desktop page speed.
 
 * **🎨 Modern Interface (Dark Mode): A minimalist and fully responsive UI built with Tailwind CSS, emphasizing readability and a sleek dark aesthetic.
 
