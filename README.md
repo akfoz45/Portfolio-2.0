@@ -5,15 +5,15 @@ This repository contains the source code for my personal portfolio website, desi
 
 * ⚡ Performance Focused: Integrates django-imagekit (using ImageSpecField) to automatically optimize project images into fast-loading thumbnails, significantly boosting mobile and desktop page speed.
 
-* **🎨 Modern Interface (Dark Mode): A minimalist and fully responsive UI built with Tailwind CSS, emphasizing readability and a sleek dark aesthetic.
+* 🎨 Modern Interface (Dark Mode): A minimalist and fully responsive UI built with Tailwind CSS, emphasizing readability and a sleek dark aesthetic.
 
-* **🧩 Hybrid Skill Display: The skills section dynamically supports both FontAwesome icon classes and external image URLs for technology logos, ensuring visual consistency.
+* 🧩 Hybrid Skill Display: The skills section dynamically supports both FontAwesome icon classes and external image URLs for technology logos, ensuring visual consistency.
 
-* **⚙️ Secure Communication: The contact form uses AJAX requests secured with CSRF Token validation to ensure safe and non-blocking message submission.
+* ⚙️ Secure Communication: The contact form uses AJAX requests secured with CSRF Token validation to ensure safe and non-blocking message submission.
 
-* **📐 Modular Design: All portfolio components (Projects, Education, Experience) are database-driven and their display order can be precisely controlled using a manual order field.
+* 📐 Modular Design: All portfolio components (Projects, Education, Experience) are database-driven and their display order can be precisely controlled using a manual order field.
 
-* **🎬 Sequential Animation: The Hero section elements load sequentially with calculated CSS animation delays, providing a smooth and engaging welcome experience.
+* 🎬 Sequential Animation: The Hero section elements load sequentially with calculated CSS animation delays, providing a smooth and engaging welcome experience.
 
 ## 🛠️ Technologies & Tools
 
