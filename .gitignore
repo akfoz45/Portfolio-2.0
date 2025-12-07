@@ -17,10 +17,6 @@ venv/
 env/
 .venv/
 
-# --- Medya ve Statik Dosyalar (Üretilenler) ---
-
-/media/
-
 
 /static_root/
 /staticfiles/
