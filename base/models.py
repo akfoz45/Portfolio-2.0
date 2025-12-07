@@ -1,4 +1,6 @@
 from django.db import models
+from imagekit.models import ImageSpecField 
+from imagekit.processors import ResizeToFill
 
 class Profile(models.Model):
     name = models.CharField(max_length=50, verbose_name="Adınız Soyadınız")
@@ -62,6 +64,12 @@ class Project(models.Model):
 class ProjectImage(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="images")
     image = models.ImageField(upload_to='projects/', verbose_name="Proje Görseli", blank=True)
+    thumbnail_version = ImageSpecField(
+        source='image', 
+        processors=[ResizeToFill(400, 300)], 
+        format='JPEG',
+        options={'quality': 70}
+    )
 
     def __str__(self):
         return f"{self.project.name} Görseli"

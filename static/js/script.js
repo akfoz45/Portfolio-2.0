@@ -1,3 +1,20 @@
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            let cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+
+
 document.addEventListener('DOMContentLoaded', function() {
     
     // --- 1. FOOTER YIL GÜNCELLEME ---
@@ -6,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         yearSpan.textContent = new Date().getFullYear();
     }
 
-    // --- 2. İLETİŞİM FORMU (AJAX) ---
+    // --- 2. İLETİŞİM FORMU (AJAX - GÜVENLİ) ---
     const contactForm = document.getElementById('contactForm');
 
     if (contactForm) {
@@ -28,7 +45,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 method: 'POST',
                 body: formData,
                 headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': csrftoken 
                 }
             })
             .then(response => response.json())
@@ -98,7 +116,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         loadMoreBtn.addEventListener('click', function() {
             if (!isExpanded) {
-                // --- AÇILMA MODU ---
                 let delay = 0; 
                 
                 items.forEach((item, index) => {
@@ -123,12 +140,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 isExpanded = true;
 
             } else {
-                // --- KAPANMA MODU ---
                 
                 projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
                 let delay = 0;
-                // Sondan başa doğru animasyon ver
                 for (let i = items.length - 1; i >= itemsToShow; i--) {
                     const item = items[i];
                     item.classList.remove('fade-in-up'); 
@@ -226,7 +241,6 @@ function reveal() {
 }
 
 window.addEventListener("scroll", function() {
-    // Back to Top Göster/Gizle
     if (backToTopBtn) {
         if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
             backToTopBtn.classList.remove("translate-y-20", "opacity-0");

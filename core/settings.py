@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'base',
+    'imagekit',
 ]
 
 MIDDLEWARE = [
@@ -122,3 +123,29 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+X_FRAME_OPTIONS = 'DENY'
+
+# HTTPS kullanıyorsan aktif et
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# HTTPS kullanıyorsan aktif et
+# SECURE_HSTS_SECONDS = 31536000 
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+# --- TEMEL GÜVENLİK AYARLARI ---
+X_FRAME_OPTIONS = 'DENY' 
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# NOT: Siteniz HTTPS ile yayınlandığında yorum satırını kaldırın:
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SECURE_HSTS_SECONDS = 31536000 
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
